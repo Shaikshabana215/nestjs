@@ -23,11 +23,11 @@ export class AuthService {
     authenticate(authenticateDto: AuthenticateDto): IAuthenticate{
         const user = this.users.find((u)=>
         u.userName === authenticateDto.userName && 
-        u.password === authenticateDto.password
+        u.password === authenticateDto.password,
         );
         if(!user) throw new NotFoundException('Invalid credentials');
         const token = sign({ ...user }, 'secrete');
-        return { token , user};
+        return { token , user };
 
     }
 }
