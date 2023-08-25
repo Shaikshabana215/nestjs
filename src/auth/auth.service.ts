@@ -29,5 +29,6 @@ export class AuthService {
         const token = sign({ ...user }, 'secrete');
         return { token , user };
 
+        
     }
 }
