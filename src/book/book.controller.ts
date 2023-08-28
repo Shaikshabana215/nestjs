@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { BookService } from './book.service';
-import { Book } from 'src/schemas/book.schema';
+
 import { createBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
+import { Book } from 'src/schema/book.schema';
 
 @Controller('books')
 export class BookController {

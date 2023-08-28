@@ -1,4 +1,6 @@
-import { category } from "src/schemas/book.schema"
+import { category } from "src/schema/book.schema"
+
+
 
 export class createBookDto{
     readonly title: string

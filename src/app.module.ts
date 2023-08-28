@@ -13,6 +13,9 @@ import { StudentService } from './student/student.service';
 import { Student, StudentSchema } from './schema/student.schema';
 import { ConfigModule } from '@nestjs/config';
 import { BookModule } from './book/book.module';
+import { User } from './auth/schema/user.schema';
+import { UserModule } from './user/user.module';
+
 
 
 @Module({
@@ -23,13 +26,16 @@ import { BookModule } from './book/book.module';
     }),
     MongooseModule.forRoot(process.env.DB_URI),
     MongooseModule.forRoot('mongodb://127.0.0.1:27017',{dbName:'nestapi'}),
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/Canteen'),
+
     BookModule,
     MongooseModule.forFeature([{name:'Student',schema:StudentSchema}]),
     AuthModule,
     PassportModule,
     // JwtModule.register({secret:'secrete', signOptions: {expiresIn: '1h'}}),
     StudentModule,
-    
+   User,
+   UserModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService, AuthService, JwtStrategy,StudentService],

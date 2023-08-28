@@ -11,9 +11,9 @@ import { User } from './schema/user.schema';
 import { ProfileDto } from './authdto/profile.dto';
 @Injectable()
 export class AuthService {
+    userService: any;
     constructor (
-        @InjectModel(User.name)
-        private userModel: Model<User>,
+        
         private jwtService: JwtService
     ){}
     
@@ -22,18 +22,18 @@ export class AuthService {
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        const user = await this.userModel.create({
+        const user = await this.userService.create(
             name,
             email,
-            password: hashedPassword
-        })
+            hashedPassword
+        )
         const token = this.jwtService.sign({id: user._id})
         return { token }
     }
 
    async login(ProfileDto: ProfileDto): Promise<{token: string}>{
     const { email, password } = ProfileDto;
-    const user = await this.userModel.findOne({email})
+    const user = await this.userService.findOne(email)
 if(!user){
     throw new UnauthorizedException('Invalid email or password')
 }
