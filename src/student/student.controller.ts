@@ -1,14 +1,17 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res, UseGuards } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from 'src/dto/create-student.dto';
 import { Response, response } from 'express';
 import { UpdateStudentDto } from 'src/dto/update-student.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('student')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
   @Post()
+  @UseGuards(AuthGuard())
+  
   async createStudent(@Res() Response, @Body() createStudentDto: CreateStudentDto){
     try{
 const newStudent = await this.studentService.createStudent(createStudentDto)

@@ -11,15 +11,23 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { StudentModule } from './student/student.module';
 import { StudentService } from './student/student.service';
 import { Student, StudentSchema } from './schema/student.schema';
+import { ConfigModule } from '@nestjs/config';
+import { BookModule } from './book/book.module';
 
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017',{dbName: 'studentdb'}),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env'
+    }),
+    MongooseModule.forRoot(process.env.DB_URI),
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017',{dbName:'nestapi'}),
+    BookModule,
     MongooseModule.forFeature([{name:'Student',schema:StudentSchema}]),
     AuthModule,
     PassportModule,
-    JwtModule.register({secret:'secrete', signOptions: {expiresIn: '1h'}}),
+    // JwtModule.register({secret:'secrete', signOptions: {expiresIn: '1h'}}),
     StudentModule,
     
   ],
