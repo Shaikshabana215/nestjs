@@ -1,14 +1,22 @@
-import { Meal, Tiffin } from "src/schema/canteen.schema"
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Meal, Tiffin } from 'src/schema/canteen.schema';
 
-export class CreateCanteenDto{
+export class CreateCanteenDto {
+  @IsNotEmpty()
+  @IsString()
+  readonly snacks: string;
 
-    readonly snacks: string
+  @IsNotEmpty()
+  @IsString()
+  readonly name: string;
 
-    readonly name: string
+  @IsNotEmpty()
+  @IsNumber()
+  readonly price: number;
 
-    readonly price: number
+  @IsNotEmpty()
+  readonly Tiffin: Tiffin;
 
-    readonly Tiffin: Tiffin
-    
-    readonly Meal: Meal
+  @IsNotEmpty()
+  readonly Meal: Meal;
 }

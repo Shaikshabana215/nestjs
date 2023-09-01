@@ -12,27 +12,20 @@ export class UserService {
     private userModel: Model<UserDocument>,
   ) {}
 
-  async create(
-    name: any,
-    email: any,
-    password: any,
-  ): Promise<User> {
-
-
+  async create(name: any, email: any, password: any, role: any): Promise<User> {
     const user = await this.userModel.create({
       name,
       email,
       password,
+      role,
     });
     return user;
   }
 
-  async findOne(
-    email: any
-  ){
-const user = await this.userModel.findOne({
-   email 
-})
-return user;
+  async findOne(email) {
+    const user = await this.userModel.findOne({
+      email,
+    });
+    return user;
   }
 }

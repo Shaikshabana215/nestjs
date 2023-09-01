@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
 import { JwtStrategy } from './auth/jwt.strategy';
@@ -14,30 +14,33 @@ import { Student, StudentSchema } from './schema/student.schema';
 import { ConfigModule } from '@nestjs/config';
 import { BookModule } from './book/book.module';
 import { User } from './auth/schema/user.schema';
+import { CanteenModule } from './canteen/canteen.module';
 import { UserModule } from './user/user.module';
-
-
+// import { UserModule } from './user/user.module';
+import { ExaminationModule } from './examination/examination.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env'
+      envFilePath: '.env',
     }),
     MongooseModule.forRoot(process.env.DB_URI),
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017',{dbName:'nestapi'}),
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017', { dbName: 'nestapi' }),
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/Canteen'),
 
     BookModule,
-    MongooseModule.forFeature([{name:'Student',schema:StudentSchema}]),
+    MongooseModule.forFeature([{ name: 'Student', schema: StudentSchema }]),
     AuthModule,
     PassportModule,
     // JwtModule.register({secret:'secrete', signOptions: {expiresIn: '1h'}}),
     StudentModule,
-   User,
-   UserModule,
+    User,
+    UserModule,
+    CanteenModule,
+    ExaminationModule,
   ],
-  controllers: [AppController, AuthController],
-  providers: [AppService, AuthService, JwtStrategy,StudentService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

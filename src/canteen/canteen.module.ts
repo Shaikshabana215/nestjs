@@ -5,10 +5,10 @@ import { CanteenSchema } from 'src/schema/canteen.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [MongooseModule.forFeature([{name:'Canteen', schema:CanteenSchema}])],
+  imports: [
+    MongooseModule.forFeature([{ name: 'Canteen', schema: CanteenSchema }]),
+  ],
   controllers: [CanteenController],
   providers: [CanteenService],
 })
 export class CanteenModule {}
-
-

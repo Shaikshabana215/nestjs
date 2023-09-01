@@ -22,28 +22,28 @@ export class AuthController {
   @Post('/signUp')
   signUp(
     @Res() res,
-    @Body() AuthenticateDto: AuthenticateDto,
+    @Body() authenticateDto: AuthenticateDto,
   ): Promise<{ token: string }> {
     try {
-      const response = this.authService.signUp(AuthenticateDto);
-      return res.status(HttpStatus.OK).json({ response });
-    } catch (error) {
-      return res.status(error.status).json(error.response);
-    }
-  }
-  @Get('/login')
-  login(
-    @Res() res,
-    @Body() ProfileDto: ProfileDto,
-  ): Promise<{ token: string }> {
-    try {
-      const response = this.authService.login(ProfileDto);
+      const response = this.authService.signUp(authenticateDto);
       return res.status(HttpStatus.OK).json({ response });
     } catch (error) {
       return res.status(error.status).json(error.response);
     }
   }
 
+  @Post('/login')
+  async login(
+    @Res() res,
+    @Body() ProfileDto: ProfileDto,
+  ): Promise<{ token: string }> {
+    try {
+      const response = await this.authService.login(ProfileDto);
+      return res.status(HttpStatus.OK).json({ response });
+    } catch (error) {
+      return res.status(error.status).json(error.response);
+    }
+  }
 
   @Roles('admin')
   @UseGuards(JwtAuthGuard, RoleGuard)
@@ -51,5 +51,4 @@ export class AuthController {
   profile(@Req() req, @Res() res) {
     return res.status(HttpStatus.OK).json(req.user);
   }
-  
 }

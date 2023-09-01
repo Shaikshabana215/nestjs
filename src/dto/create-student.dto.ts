@@ -7,15 +7,19 @@ export class CreateStudentDto {
   @MaxLength(30)
   @IsNotEmpty()
   readonly name: string;
+
   @IsNotEmpty()
   @IsNumber()
   readonly rollNumber: number;
+
   @IsNotEmpty()
   @IsNumber()
   readonly class: number;
+
   @IsString()
   @IsNotEmpty()
   readonly gender: string;
+
   @IsNotEmpty()
   @IsNumber()
   readonly marks: number;

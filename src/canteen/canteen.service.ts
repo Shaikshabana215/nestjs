@@ -3,8 +3,8 @@ import * as mongoose from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Book } from 'src/schema/book.schema';
 import { Canteen } from 'src/schema/canteen.schema';
-import { CreateCanteenDto } from '../dto/create.dto';
-import { UpdateCanteenDto } from '../dto/update.dto';
+import { CreateCanteenDto } from './dto/create.dto';
+import { UpdateCanteenDto } from './dto/update.dto';
 
 @Injectable()
 export class CanteenService {

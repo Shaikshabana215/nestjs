@@ -1,16 +1,16 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 
 export enum Tiffin {
-    Poori = 'Poori',
-    Dosa = 'Dosa',
-    Idli = 'Idli',
-    Chapathi = 'Capathi',
-};
+  Poori = 'Poori',
+  Dosa = 'Dosa',
+  Idli = 'Idli',
+  Chapathi = 'Capathi',
+}
 export enum Meal {
-    Lunch = "{Daal, Rice, Curd, Sambar, Bhendi Fry, Tomato Chutney}",
-    Biryani = '{ Biryani Rice, Raita, Curry}',
-    FriedRice = 'Friedrice',
-    CurdRice = 'Curdrice',
+  Lunch = '{Daal, Rice, Curd, Sambar, Bhendi Fry, Tomato Chutney}',
+  Biryani = '{ Biryani Rice, Raita, Curry}',
+  FriedRice = 'Friedrice',
+  CurdRice = 'Curdrice',
 }
 
 @Schema({
@@ -24,13 +24,13 @@ export class Canteen {
   name: string;
 
   @Prop()
-  Price: number;
+  price: number;
 
-  @Prop() 
+  @Prop()
   Tiffin: Tiffin;
 
-  @Prop() 
+  @Prop()
   Meal: Meal;
 }
 
-export const CanteenSchema = SchemaFactory.createForClass(Canteen)
+export const CanteenSchema = SchemaFactory.createForClass(Canteen);
