@@ -19,8 +19,8 @@ import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { RoleGuard } from 'src/auth/role/role.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';
 
-// @Roles('admin', 'employee', 'student', 'examination')
-// @UseGuards(JwtAuthGuard, RoleGuard)
+@Roles('admin', 'employee', 'student', 'examination')
+@UseGuards(JwtAuthGuard, RoleGuard)
 @Controller('canteen')
 export class CanteenController {
   constructor(private readonly canteenService: CanteenService) {}

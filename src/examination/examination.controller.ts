@@ -35,7 +35,7 @@ export class ExaminationController {
   async createOrder(@Body() examination: CreateExamDto): Promise<Examination> {
     return this.examinationService.create(examination);
   }
-  @Roles('admin', 'employee')
+  @Roles('admin', 'employee', 'student')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Get(':id')
   async getOrder(@Param('id') id: string): Promise<Examination> {

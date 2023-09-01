@@ -26,7 +26,9 @@ export class AuthController {
   ): Promise<{ token: string }> {
     try {
       const response = this.authService.signUp(authenticateDto);
-      return res.status(HttpStatus.OK).json({ response });
+      return res
+        .status(HttpStatus.OK)
+        .json({ response: 'Sucessfully signed up' });
     } catch (error) {
       return res.status(error.status).json(error.response);
     }
@@ -45,7 +47,7 @@ export class AuthController {
     }
   }
 
-  @Roles('admin')
+  @Roles('admin', 'employee', 'student', 'examination')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Get()
   profile(@Req() req, @Res() res) {

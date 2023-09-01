@@ -16,21 +16,26 @@ import { response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateStudentDto } from 'src/dto/create-student.dto';
 import { UpdateStudentDto } from 'src/dto/update-student.dto';
+import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { RoleGuard } from 'src/auth/role/role.guard';
+import { Roles } from 'src/auth/roles/roles.decorator';
 
 @Controller('student')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
+  @Roles('admin', 'employee', 'examination', 'student')
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Post()
-  @UseGuards(AuthGuard('jwt'))
   async createStudent(
     @Res() response,
     @Body() createStudentDto: CreateStudentDto,
   ) {
+    // console.log(createStudentDto);
     try {
       const newStudent =
         await this.studentService.createStudent(createStudentDto);
-      console.log(newStudent);
+      // console.log(newStudent);
       return response.status(HttpStatus.CREATED).json({
         message: 'Student has been created sucessfully',
         newStudent,
@@ -45,7 +50,9 @@ export class StudentController {
     }
   }
 
-  @Get()
+  @Roles('admin', 'employee', 'student')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Get('/sget')
   async getStudents(@Res() response) {
     try {
       const studentData = await this.studentService.getAllStudent();
@@ -62,6 +69,22 @@ export class StudentController {
     }
   }
 
+  @Roles('admin', 'employee', 'student')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Get('/:id')
+  async getStudent(@Res() response, @Param('id') studentId: string) {
+    try {
+      const getStudent = await this.studentService.getStudent(studentId);
+      return response.status(HttpStatus.OK).json({
+        message: 'One Student Data Sucessfullly found',
+        getStudent,
+      });
+    } catch (err) {
+      return response.status(err.status).json(err.response);
+    }
+  }
+  @Roles('admin', 'employee', 'student')
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Put('/:id')
   async UpdateStudent(
     @Res() response,
@@ -82,6 +105,8 @@ export class StudentController {
     }
   }
 
+  @Roles('admin', 'employee')
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Delete('/:id')
   async deleteStudent(@Res() response, @Param('id') studentId: string) {
     try {

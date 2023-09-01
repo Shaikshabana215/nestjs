@@ -16,7 +16,6 @@ export class User {
 
   @Prop()
   role: string;
-  private _id: any;
 }
 
 export type UserDocument = HydratedDocument<User>;
